@@ -11,7 +11,8 @@
       "@/layouts/*": ["layouts/*"],
       "@/views/*": ["views/*"],
       "@/types/*": ["types/*"],
-      "@/services/*": ["services/*"]
+      "@/services/*": ["services/*"],
+      "@/lib/*": ["lib/*"]
     },
 
     /* Bundler mode */
