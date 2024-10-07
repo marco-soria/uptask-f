@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UserLoginForm } from '@/types/index';
 import ErrorMessage from '@/components/ErrorMessage';
 import { authenticateUser } from '@/services/AuthApi';
@@ -18,13 +18,16 @@ export default function LoginView() {
   } = useForm({ defaultValues: initialValues });
   const navigate = useNavigate();
 
+  const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: authenticateUser,
     onError: (error) => {
       toast.error(error.message);
     },
     onSuccess: () => {
-      navigate('/');
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+      //console.log('Query invalidated and refetched');
+      navigate('/'); // Redirige al usuario a la página de inicio
     },
   });
 

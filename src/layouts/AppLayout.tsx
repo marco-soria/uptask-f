@@ -7,7 +7,7 @@ import { useAuth } from '@/hooks/useAuth';
 
 export default function AppLayout() {
   const { data, isError, isLoading } = useAuth();
-  if (isLoading) return 'Cargando...';
+  if (isLoading) return 'Loading...';
   if (isError) {
     return <Navigate to="/auth/login" />;
   }

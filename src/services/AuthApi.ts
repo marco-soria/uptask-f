@@ -15,6 +15,7 @@ export async function createAccount(formData: UserRegistrationForm) {
   try {
     const url = '/auth/create-account';
     const { data } = await api.post<string>(url, formData);
+    localStorage.setItem('AUTH_TOKEN', data);
     return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
@@ -52,8 +53,8 @@ export async function requestConfirmationCode(
 export async function authenticateUser(formData: UserLoginForm) {
   try {
     const url = '/auth/login';
-    const { data } = await api.post<string>(url, formData);
-    localStorage.setItem('AUTH_TOKEN', data);
+    const { data } = await api.post(url, formData);
+    localStorage.setItem('AUTH_TOKEN', data); // Asegúrate de que el token se almacene aquí
     return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
