@@ -1,26 +1,26 @@
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import ErrorMessage from '../ErrorMessage';
-import { ProjectFormData } from '../../types';
+import { ProjectFormData } from 'types';
 
 type ProjectFormProps = {
   register: UseFormRegister<ProjectFormData>;
   errors: FieldErrors<ProjectFormData>;
 };
 
-export default function ProjectForm({ register, errors }: ProjectFormProps) {
+export default function ProjectForm({ errors, register }: ProjectFormProps) {
   return (
     <>
       <div className="mb-5 space-y-3">
         <label htmlFor="projectName" className="text-sm uppercase font-bold">
-          Nombre del Proyecto
+          Project Name
         </label>
         <input
           id="projectName"
           className="w-full p-3  border border-gray-200"
           type="text"
-          placeholder="Nombre del Proyecto"
+          placeholder="Project Name"
           {...register('projectName', {
-            required: 'El Titulo del Proyecto es obligatorio',
+            required: 'Project Name is required',
           })}
         />
 
@@ -31,15 +31,15 @@ export default function ProjectForm({ register, errors }: ProjectFormProps) {
 
       <div className="mb-5 space-y-3">
         <label htmlFor="clientName" className="text-sm uppercase font-bold">
-          Nombre Cliente
+          Client Name
         </label>
         <input
           id="clientName"
           className="w-full p-3  border border-gray-200"
           type="text"
-          placeholder="Nombre del Cliente"
+          placeholder="Client Name"
           {...register('clientName', {
-            required: 'El Nombre del Cliente es obligatorio',
+            required: 'Name of the client is required',
           })}
         />
 
@@ -50,14 +50,14 @@ export default function ProjectForm({ register, errors }: ProjectFormProps) {
 
       <div className="mb-5 space-y-3">
         <label htmlFor="description" className="text-sm uppercase font-bold">
-          Descripción
+          Description
         </label>
         <textarea
           id="description"
           className="w-full p-3  border border-gray-200"
-          placeholder="Descripción del Proyecto"
+          placeholder="Project Description"
           {...register('description', {
-            required: 'Una descripción del proyecto es obligatoria',
+            required: 'Description is required',
           })}
         />
 

@@ -1,10 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom';
 import ProjectForm from './ProjectForm';
-import { Project, ProjectFormData } from '../../types';
+import { Link, useNavigate } from 'react-router-dom';
+import { Project, ProjectFormData } from '@/types/index';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateProject } from '../../services/ProjectApi';
+
 import { toast } from 'react-toastify';
+import { updateProject } from '../../services/ProjectApi';
 
 type EditProjectFormProps = {
   data: ProjectFormData;
@@ -31,34 +32,37 @@ export default function EditProjectForm({
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: updateProject,
+    onError: (error) => {
+      toast.error(error.message);
+    },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       queryClient.invalidateQueries({ queryKey: ['editProject', projectId] });
-      toast.success(data.message);
+      toast.success(data);
       navigate('/');
-    },
-    onError: (error) => {
-      toast.error(error.message);
     },
   });
 
   const handleForm = (formData: ProjectFormData) => {
-    const data = { formData, projectId };
+    const data = {
+      formData,
+      projectId,
+    };
     mutate(data);
   };
 
   return (
     <>
-      <div className="mas-w-3xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         <h1 className="text-5xl font-black">Edit Project</h1>
         <p className="text-2xl font-light text-gray-500 mt-5">
-          Fill the following form to edit the Project
+          Fill this form to edit the project
         </p>
 
-        <nav className="my-5">
+        <nav className="my-5 ">
           <Link
+            className=" bg-purple-400 hover:bg-purple-500 px-10 py-3 text-white text-xl font-bold cursor-pointer transition-colors"
             to="/"
-            className="bg-purple-400 hover:bg-purple-500 px-10 py-3 text-white text-xl font-bold cursor-pointer transition-colors"
           >
             Back to Projects
           </Link>
@@ -70,10 +74,11 @@ export default function EditProjectForm({
           noValidate
         >
           <ProjectForm register={register} errors={errors} />
+
           <input
             type="submit"
             value="Save Changes"
-            className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors"
+            className=" bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors"
           />
         </form>
       </div>
