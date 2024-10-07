@@ -1,3 +1,4 @@
+import { statusTranslations } from '../../locales/en';
 import { Task } from '../../types';
 import TaskCard from './TaskCard';
 
@@ -42,7 +43,7 @@ export default function TaskList({ tasks }: TaskListProps) {
             <h3
               className={`capitalize text-xl font-light border border-slate-300 bg-white p-3 border-t-8 ${statusStyles[status]}`}
             >
-              {status}
+              {statusTranslations[status]}
             </h3>
             <ul className="mt-5 space-y-5">
               {tasks.length === 0 ? (
